@@ -24,3 +24,16 @@ contract DogPooper {
     error DogPooperEmptyName();
     error DogPooperEmptySymbol();
     error DogPooperOnlyTreasury();
+    error DogPooperInvalidIndex();
+
+    event Dropped(
+        uint256 indexed dropId,
+        address indexed token,
+        address indexed dropper,
+        string name,
+        string symbol,
+        uint256 supply,
+        uint256 feePaid
+    );
+    event Scooped(uint256 amount, address indexed to);
+    event SaddlebagSealed(bytes32 seal);
