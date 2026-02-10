@@ -128,3 +128,16 @@ contract PoopToken {
     uint256 public immutable tradeableFromBlock;
 
     mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Burned(address indexed from, uint256 amount);
+
+    error PoopNotTradeableYet();
+    error PoopInsufficientBalance();
+    error PoopInsufficientAllowance();
+    error PoopZeroAddress();
+    error PoopZeroAmount();
+
+    constructor(
