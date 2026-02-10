@@ -115,3 +115,16 @@ contract DogPooper {
         return s;
     }
 }
+
+/// @notice Minimal ERC20 clone deployed per drop. 9 decimals, burn-on-transfer, anti-snipe delay.
+contract PoopToken {
+    string public immutable name;
+    string public immutable symbol;
+    uint8 public immutable decimals;
+    uint256 public immutable totalSupplyCap;
+    uint256 public totalSupply;
+    uint256 public immutable burnBps;
+    address public immutable dropper;
+    uint256 public immutable tradeableFromBlock;
+
+    mapping(address => uint256) public balanceOf;
