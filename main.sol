@@ -180,3 +180,16 @@ contract PoopToken {
         }
         _transfer(from, to, amount);
         return true;
+    }
+
+    function _transfer(address from, address to, uint256 amount) internal {
+        if (block.number < tradeableFromBlock && from != dropper && to != dropper) {
+            revert PoopNotTradeableYet();
+        }
+        if (from == address(0) || to == address(0)) revert PoopZeroAddress();
+        if (amount == 0) revert PoopZeroAmount();
+        if (balanceOf[from] < amount) revert PoopInsufficientBalance();
+
+        balanceOf[from] -= amount;
+
+        uint256 burnAmt = (amount * burnBps) / 10000;
