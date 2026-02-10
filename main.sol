@@ -102,3 +102,16 @@ contract DogPooper {
         return dropIndexToToken[index];
     }
 
+    function sealSaddlebag() external view returns (bytes32) {
+        bytes32 s = keccak256(
+            abi.encodePacked(
+                saddlebagDomain,
+                totalDrops,
+                genesisBlock,
+                block.number,
+                address(this).balance
+            )
+        );
+        return s;
+    }
+}
