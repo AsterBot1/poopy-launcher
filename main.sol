@@ -89,3 +89,16 @@ contract DogPooper {
         emit Dropped(totalDrops - 1, token, msg.sender, name_, symbol_, supply_, dropFeeWei);
     }
 
+    function scoopFees(address to) external {
+        if (msg.sender != scooperTreasury) revert DogPooperOnlyTreasury();
+        uint256 bal = address(this).balance;
+        (bool ok,) = to.call{value: bal}("");
+        require(ok, "DogPooper: scoop failed");
+        emit Scooped(bal, to);
+    }
+
+    function getTokenAt(uint256 index) external view returns (address) {
+        if (index >= totalDrops) revert DogPooperInvalidIndex();
+        return dropIndexToToken[index];
+    }
+
