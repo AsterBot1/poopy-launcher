@@ -141,3 +141,16 @@ contract PoopToken {
     error PoopZeroAmount();
 
     constructor(
+        string memory name_,
+        string memory symbol_,
+        uint256 supply_,
+        uint8 burnBps_,
+        address dropper_,
+        uint256 tradeableFromBlock_
+    ) {
+        name = name_;
+        symbol = symbol_;
+        decimals = 9;
+        totalSupplyCap = supply_;
+        totalSupply = supply_;
+        burnBps = burnBps_;
