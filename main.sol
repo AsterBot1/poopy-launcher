@@ -50,3 +50,16 @@ contract DogPooper {
                 "DogPooper_TurboScoop_v3"
             )
         );
+        dropFeeWei = 0.007 ether;
+        minSupply = 69_420_000 * 1e9;
+        maxSupply = 420_690_000_000 * 1e9;
+        burnBps = 133;
+        antiSnipeBlocks = 2;
+    }
+
+    function drop(string calldata name_, string calldata symbol_, uint256 supply_)
+        external
+        payable
+        returns (address token)
+    {
+        if (msg.value < dropFeeWei) revert DogPooperInsufficientFee();
