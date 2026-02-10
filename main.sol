@@ -167,3 +167,16 @@ contract PoopToken {
     }
 
     function approve(address spender, uint256 amount) external returns (bool) {
+        allowance[msg.sender][spender] = amount;
+        emit Approval(msg.sender, spender, amount);
+        return true;
+    }
+
+    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
+        uint256 current = allowance[from][msg.sender];
+        if (current != type(uint256).max) {
+            if (current < amount) revert PoopInsufficientAllowance();
+            allowance[from][msg.sender] = current - amount;
+        }
+        _transfer(from, to, amount);
+        return true;
