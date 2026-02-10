@@ -37,3 +37,16 @@ contract DogPooper {
     );
     event Scooped(uint256 amount, address indexed to);
     event SaddlebagSealed(bytes32 seal);
+
+    constructor() {
+        scooperTreasury = msg.sender;
+        genesisBlock = block.number;
+        saddlebagDomain = keccak256(
+            abi.encodePacked(
+                block.chainid,
+                address(this),
+                block.prevrandao,
+                block.timestamp,
+                "DogPooper_TurboScoop_v3"
+            )
+        );
