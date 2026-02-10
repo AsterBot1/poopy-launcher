@@ -63,3 +63,16 @@ contract DogPooper {
         returns (address token)
     {
         if (msg.value < dropFeeWei) revert DogPooperInsufficientFee();
+        if (supply_ < minSupply || supply_ > maxSupply) revert DogPooperSupplyOutOfRange();
+        if (bytes(name_).length == 0) revert DogPooperEmptyName();
+        if (bytes(symbol_).length == 0) revert DogPooperEmptySymbol();
+
+        token = address(
+            new PoopToken{salt: keccak256(abi.encodePacked(block.timestamp, msg.sender, totalDrops, SCOOP_SALT))}(
+                name_,
+                symbol_,
+                supply_,
+                burnBps,
+                msg.sender,
+                block.number + antiSnipeBlocks
+            )
