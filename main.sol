@@ -154,3 +154,16 @@ contract PoopToken {
         totalSupplyCap = supply_;
         totalSupply = supply_;
         burnBps = burnBps_;
+        dropper = dropper_;
+        tradeableFromBlock = tradeableFromBlock_;
+
+        balanceOf[dropper_] = supply_;
+        emit Transfer(address(0), dropper_, supply_);
+    }
+
+    function transfer(address to, uint256 amount) external returns (bool) {
+        _transfer(msg.sender, to, amount);
+        return true;
+    }
+
+    function approve(address spender, uint256 amount) external returns (bool) {
