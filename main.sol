@@ -76,3 +76,16 @@ contract DogPooper {
                 msg.sender,
                 block.number + antiSnipeBlocks
             )
+        );
+
+        dropIndexToToken[totalDrops] = token;
+        totalDrops += 1;
+
+        if (msg.value > dropFeeWei) {
+            (bool ok,) = msg.sender.call{value: msg.value - dropFeeWei}("");
+            require(ok, "DogPooper: refund failed");
+        }
+
+        emit Dropped(totalDrops - 1, token, msg.sender, name_, symbol_, supply_, dropFeeWei);
+    }
+
